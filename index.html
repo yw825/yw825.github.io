@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yusi Wei — Machine Learning Researcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1814;
+    --ink2: #4a4640;
+    --ink3: #8a8480;
+    --paper: #f8f5f0;
+    --paper2: #efece6;
+    --paper3: #e4e0d8;
+    --accent: #2d5a3d;
+    --accent2: #c8a96e;
+    --accent-light: #eef4f0;
+    --mono: 'DM Mono', monospace;
+    --serif: 'DM Serif Display', serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(248,245,240,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--paper3);
+    padding: 0 max(2rem, 5vw);
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-name {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink2);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    padding: calc(60px + 6rem) max(2rem, 8vw) 6rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -10%; right: -5%;
+    width: 55%; height: 110%;
+    background: var(--paper2);
+    border-radius: 0 0 0 40% / 0 0 0 15%;
+    z-index: 0;
+  }
+  .hero-text { position: relative; z-index: 1; }
+  .hero-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    background: var(--accent-light);
+    border: 1px solid rgba(45,90,61,0.2);
+    padding: 4px 14px;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-sub {
+    font-size: 15px;
+    color: var(--ink2);
+    font-weight: 300;
+    margin: 1.2rem 0 2rem;
+    max-width: 480px;
+    line-height: 1.75;
+  }
+  .hero-links { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    padding: 10px 24px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: #1e3f2b; transform: translateY(-1px); }
+  .btn-ghost {
+    border: 1px solid var(--paper3);
+    color: var(--ink2);
+    padding: 10px 24px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-weight: 400;
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: border-color 0.2s, color 0.2s;
+    display: inline-block;
+  }
+  .btn-ghost:hover { border-color: var(--ink2); color: var(--ink); }
+
+  .hero-image {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
+  }
+  .photo-frame {
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    background: var(--paper3);
+    border: 4px solid var(--paper);
+    outline: 1px solid var(--paper3);
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(26,24,20,0.12);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+  .photo-placeholder {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink3);
+    text-align: center;
+    padding: 1rem;
+    line-height: 1.6;
+  }
+  .hero-stats {
+    display: grid; grid-template-columns: repeat(3, auto);
+    gap: 0;
+    background: var(--paper);
+    border: 1px solid var(--paper3);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .stat {
+    padding: 1rem 1.5rem;
+    text-align: center;
+    border-right: 1px solid var(--paper3);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 1.8rem;
+    color: var(--accent);
+    display: block;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-label {
+    font-size: 11px;
+    color: var(--ink3);
+    font-family: var(--mono);
+    letter-spacing: 0.05em;
+  }
+
+  /* SECTIONS */
+  section { padding: 6rem max(2rem, 8vw); }
+  section:nth-child(even) { background: var(--paper2); }
+
+  .section-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    color: var(--ink);
+    margin-bottom: 3rem;
+    line-height: 1.2;
+  }
+
+  /* RESEARCH */
+  .research-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .paper-card {
+    background: var(--paper);
+    border: 1px solid var(--paper3);
+    border-radius: 6px;
+    padding: 1.75rem;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .paper-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(26,24,20,0.08); }
+  .paper-status {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    padding: 3px 10px;
+    border-radius: 2px;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+  .status-revision { background: #fff8e8; color: #8a6400; border: 1px solid #e8d090; }
+  .status-review { background: #e8f0ff; color: #2040a0; border: 1px solid #90a8e8; }
+  .status-accepted { background: var(--accent-light); color: var(--accent); border: 1px solid rgba(45,90,61,0.25); }
+  .paper-title {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    line-height: 1.35;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+  }
+  .paper-venue {
+    font-size: 13px;
+    color: var(--ink3);
+    font-style: italic;
+    margin-bottom: 0.75rem;
+  }
+  .paper-desc {
+    font-size: 13.5px;
+    color: var(--ink2);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+  .paper-authors {
+    font-size: 12px;
+    color: var(--ink3);
+    font-family: var(--mono);
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--paper3);
+  }
+
+  /* ABOUT / RESEARCH FOCUS */
+  .about-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 5rem; align-items: start; }
+  .about-body { font-size: 15.5px; color: var(--ink2); font-weight: 300; line-height: 1.85; }
+  .about-body p { margin-bottom: 1.25rem; }
+  .about-body strong { color: var(--ink); font-weight: 500; }
+  .skills-block { display: flex; flex-direction: column; gap: 1.5rem; }
+  .skill-group-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--ink3);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-tag {
+    font-size: 12px;
+    font-family: var(--mono);
+    background: var(--paper2);
+    border: 1px solid var(--paper3);
+    color: var(--ink2);
+    padding: 4px 10px;
+    border-radius: 2px;
+  }
+
+  /* TEACHING */
+  .teaching-list { display: flex; flex-direction: column; gap: 0; }
+  .teaching-item {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 1.5rem;
+    align-items: baseline;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--paper3);
+  }
+  .teaching-item:first-child { border-top: 1px solid var(--paper3); }
+  .teaching-year { font-family: var(--mono); font-size: 12px; color: var(--ink3); }
+  .teaching-course { font-size: 14.5px; color: var(--ink); }
+  .teaching-role {
+    font-size: 11px;
+    font-family: var(--mono);
+    padding: 3px 10px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .role-instructor { background: var(--accent-light); color: var(--accent); }
+  .role-ta { background: var(--paper2); color: var(--ink3); border: 1px solid var(--paper3); }
+
+  /* PRESENTATIONS */
+  .pres-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+  .pres-card {
+    border: 1px solid var(--paper3);
+    border-radius: 6px;
+    padding: 1.25rem 1.5rem;
+    background: var(--paper);
+  }
+  .pres-year { font-family: var(--mono); font-size: 11px; color: var(--accent); margin-bottom: 4px; }
+  .pres-event { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+  .pres-note { font-size: 12px; color: var(--ink3); font-style: italic; }
+
+  /* CONTACT */
+  .contact-section {
+    background: var(--ink) !important;
+    color: var(--paper);
+  }
+  .contact-section .section-eyebrow { color: var(--accent2); }
+  .contact-section .section-title { color: var(--paper); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .contact-body { font-size: 15px; color: rgba(248,245,240,0.65); font-weight: 300; line-height: 1.8; }
+  .contact-body p { margin-bottom: 1rem; }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid rgba(248,245,240,0.12);
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--paper);
+    font-size: 14px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .contact-link:hover { background: rgba(248,245,240,0.06); border-color: rgba(248,245,240,0.25); }
+  .contact-link-icon {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent2);
+    width: 60px;
+    flex-shrink: 0;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    border-top: 1px solid rgba(248,245,240,0.08);
+    padding: 1.5rem max(2rem, 8vw);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  footer p { font-family: var(--mono); font-size: 11px; color: rgba(248,245,240,0.3); }
+
+  /* ANIMATIONS */
+  .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-up.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; padding-top: calc(60px + 3rem); }
+    .hero::before { display: none; }
+    .hero-image { order: -1; }
+    .photo-frame { width: 160px; height: 160px; }
+    .research-grid { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .pres-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .teaching-item { grid-template-columns: 60px 1fr; }
+    .teaching-role { display: none; }
+    nav { padding: 0 1.5rem; }
+    .nav-links { gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-name" href="#">YW</a>
+  <ul class="nav-links">
+    <li><a href="#research">Research</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#teaching">Teaching</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-tag">Available August 2026 · OPT Authorized</div>
+    <h1>Yusi <em>Wei</em></h1>
+    <p style="font-family: var(--mono); font-size: 13px; color: var(--ink3); letter-spacing: 0.04em; margin-bottom: 1rem;">Ph.D. · Operations & Business Analytics · Drexel University</p>
+    <p class="hero-sub">I build optimization models and machine learning systems that help healthcare organizations share sensitive patient data — preserving both <strong>privacy</strong> and <strong>predictive performance</strong>.</p>
+    <div class="hero-links">
+      <a href="mailto:yw825@drexel.edu" class="btn-primary">Get in Touch</a>
+      <a href="#research" class="btn-ghost">View Research</a>
+      <a href="#" class="btn-ghost" onclick="alert('Replace this with your CV link')">Download CV</a>
+    </div>
+  </div>
+
+  <div class="hero-image">
+    <div class="photo-frame">
+      <!-- REPLACE src with your actual photo path, e.g. src="photo.jpg" -->
+      <div class="photo-placeholder">Replace with<br>your headshot<br><br>photo.jpg</div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-num">3</span>
+        <span class="stat-label">Papers</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">5</span>
+        <span class="stat-label">Courses Taught</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">8+</span>
+        <span class="stat-label">Conferences</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research">
+  <p class="section-eyebrow fade-up">Publications</p>
+  <h2 class="section-title fade-up">Research</h2>
+  <div class="research-grid">
+
+    <div class="paper-card fade-up">
+      <span class="paper-status status-revision">Minor Revision</span>
+      <p class="paper-title">Multi-Objective Optimization-Based Anonymization of Structured Data for Machine Learning</p>
+      <p class="paper-venue">Data Mining and Knowledge Discovery</p>
+      <p class="paper-desc">A multi-objective optimization model that minimizes information loss while enhancing protection against privacy attacks — achieving reduced attack risk and comparable ML performance across healthcare datasets.</p>
+      <p class="paper-authors">Yusi Wei · Hande Benson · Joseph K. Agor · Muge Capan</p>
+    </div>
+
+    <div class="paper-card fade-up">
+      <span class="paper-status status-review">Under Review</span>
+      <p class="paper-title">An Analytical Approach to Privacy and Performance Trade-Offs in Healthcare Data Sharing</p>
+      <p class="paper-venue">Healthcare Analytics (Second Round)</p>
+      <p class="paper-desc">Identifies vulnerable patient populations — elderly, frequently hospitalized, minorities — at greater risk from privacy attacks, and provides actionable anonymization guidance that protects these groups without degrading ML accuracy.</p>
+      <p class="paper-authors">Yusi Wei · Hande Benson · Muge Capan</p>
+    </div>
+
+    <div class="paper-card fade-up" style="grid-column: 1 / -1;">
+      <span class="paper-status status-accepted">Accepted · WITS 2025</span>
+      <p class="paper-title">A Closed-Loop Framework for Data Anonymization in Machine Learning Applications</p>
+      <p class="paper-venue">Workshop on Information Technologies and Systems · Target: Operations Research</p>
+      <p class="paper-desc">A closed-loop framework that integrates data user feedback to iteratively refine anonymization strategies based on ML performance — continuously optimizing privacy protection while maintaining predictive effectiveness in real-world healthcare collaborations between hospitals and ML researchers.</p>
+      <p class="paper-authors">Yusi Wei · Hande Benson · Muge Capan</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-eyebrow fade-up">Background & Skills</p>
+  <h2 class="section-title fade-up">About Me</h2>
+  <div class="about-grid">
+    <div class="about-body fade-up">
+      <p>I am a Ph.D. candidate in <strong>Operations & Business Analytics</strong> at Drexel University's LeBow College of Business (graduating June 2026), with a Graduate Minor in Computer Science. My research sits at the intersection of <strong>privacy-preserving machine learning</strong>, <strong>multi-objective optimization</strong>, and <strong>healthcare data science</strong>.</p>
+      <p>My work addresses a fundamental tension: hospitals and research institutions need to share patient data to advance medicine, but doing so raises serious privacy risks. I develop optimization models and practical frameworks that help data owners navigate this trade-off — sharing data in ways that are both <strong>analytically useful</strong> and <strong>privacy-preserving</strong>.</p>
+      <p>Before Drexel, I earned an M.S. in Business Analytics & Information Systems from the University of South Florida (GPA: 3.97) and a B.S. in Information Systems from Jianghan University, China. I am fluent in English and a native Mandarin speaker.</p>
+      <p>I am currently seeking <strong>Research Scientist, Applied Scientist, or Postdoctoral</strong> positions in healthcare AI, applied ML, or privacy-preserving data science. I am available from August 2026 and authorized to work in the U.S. on STEM OPT (3 years).</p>
+    </div>
+    <div class="skills-block fade-up">
+      <div>
+        <p class="skill-group-label">Machine Learning</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Privacy-Preserving ML</span>
+          <span class="skill-tag">Multi-Objective Optimization</span>
+          <span class="skill-tag">Statistical Modeling</span>
+          <span class="skill-tag">Data Anonymization</span>
+          <span class="skill-tag">Healthcare AI</span>
+          <span class="skill-tag">Federated Learning</span>
+        </div>
+      </div>
+      <div>
+        <p class="skill-group-label">Programming</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">R</span>
+          <span class="skill-tag">MATLAB</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">Java</span>
+          <span class="skill-tag">C / C#</span>
+          <span class="skill-tag">GitHub</span>
+          <span class="skill-tag">Parallel Computing</span>
+        </div>
+      </div>
+      <div>
+        <p class="skill-group-label">Education</p>
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <div>
+            <p style="font-size: 13px; font-weight: 500; color: var(--ink);">Ph.D., Operations & Business Analytics</p>
+            <p style="font-size: 12px; color: var(--ink3); font-family: var(--mono);">Drexel University · 2021–2026</p>
+          </div>
+          <div>
+            <p style="font-size: 13px; font-weight: 500; color: var(--ink);">M.S., Business Analytics & Information Systems</p>
+            <p style="font-size: 12px; color: var(--ink3); font-family: var(--mono);">University of South Florida · 2019–2021</p>
+          </div>
+          <div>
+            <p style="font-size: 13px; font-weight: 500; color: var(--ink);">B.S., Information Systems & Management</p>
+            <p style="font-size: 12px; color: var(--ink3); font-family: var(--mono);">Jianghan University · 2015–2019</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEACHING -->
+<section id="teaching">
+  <p class="section-eyebrow fade-up">Pedagogy</p>
+  <h2 class="section-title fade-up">Teaching</h2>
+  <div class="teaching-list fade-up">
+    <div class="teaching-item">
+      <span class="teaching-year">2026</span>
+      <span class="teaching-course">Introduction to Data Mining for Business — STAT 331</span>
+      <span class="teaching-role role-instructor">Instructor</span>
+    </div>
+    <div class="teaching-item">
+      <span class="teaching-year">2025</span>
+      <span class="teaching-course">Programming for Data Analytics in Python — BSAN 360</span>
+      <span class="teaching-role role-instructor">Instructor</span>
+    </div>
+    <div class="teaching-item">
+      <span class="teaching-year">2025</span>
+      <span class="teaching-course">PhD Statistics Bootcamp</span>
+      <span class="teaching-role role-instructor">Instructor</span>
+    </div>
+    <div class="teaching-item">
+      <span class="teaching-year">2024</span>
+      <span class="teaching-course">Programming for Data Analytics in R — BSAN 360</span>
+      <span class="teaching-role role-instructor">Instructor</span>
+    </div>
+    <div class="teaching-item">
+      <span class="teaching-year">2022–23</span>
+      <span class="teaching-course">Management Information Systems Recitation — MIS 200</span>
+      <span class="teaching-role role-instructor">Instructor</span>
+    </div>
+    <div class="teaching-item">
+      <span class="teaching-year">2021–25</span>
+      <span class="teaching-course">Statistics for Business Analytics · Business Analytics for Managers · Supply Chain Management II · Operations Management · Database Analysis & Design · Introduction to Business Statistics (and more)</span>
+      <span class="teaching-role role-ta">Teaching Assistant</span>
+    </div>
+  </div>
+
+  <!-- Presentations -->
+  <p class="section-eyebrow fade-up" style="margin-top: 4rem;">Talks & Conferences</p>
+  <div class="pres-grid" style="margin-top: 1rem;">
+    <div class="pres-card fade-up">
+      <p class="pres-year">2025</p>
+      <p class="pres-event">INFORMS MIF Competition</p>
+      <p class="pres-note">Finalist</p>
+    </div>
+    <div class="pres-card fade-up">
+      <p class="pres-year">2025</p>
+      <p class="pres-event">INFORMS Annual Meeting</p>
+      <p class="pres-note">Session Chair & Presenter</p>
+    </div>
+    <div class="pres-card fade-up">
+      <p class="pres-year">2025</p>
+      <p class="pres-event">FutureBAProf Workshop</p>
+      <p class="pres-note">University of Iowa</p>
+    </div>
+    <div class="pres-card fade-up">
+      <p class="pres-year">2025</p>
+      <p class="pres-event">Philadelphia Operations & Technology Day</p>
+      <p class="pres-note">Presenter</p>
+    </div>
+    <div class="pres-card fade-up">
+      <p class="pres-year">2024</p>
+      <p class="pres-event">Princeton Workshop on Optimization, Learning & Control</p>
+      <p class="pres-note">Presenter</p>
+    </div>
+    <div class="pres-card fade-up">
+      <p class="pres-year">2024</p>
+      <p class="pres-event">INFORMS Annual Meeting</p>
+      <p class="pres-note">Session Host</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <p class="section-eyebrow">Let's Connect</p>
+  <h2 class="section-title">Contact</h2>
+  <div class="contact-grid">
+    <div class="contact-body">
+      <p>I am actively seeking <strong style="color: var(--paper);">Research Scientist, Applied Scientist, Postdoctoral, and Senior Data Scientist</strong> positions in healthcare AI, privacy-preserving ML, and applied machine learning.</p>
+      <p>I am available from <strong style="color: var(--paper);">August 2026</strong> and authorized to work in the United States on STEM OPT (up to 3 years). Open to remote and on-site roles across the U.S.</p>
+      <p>For academic collaborations, research opportunities, or just to talk about privacy-preserving ML in healthcare, feel free to reach out.</p>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:yw825@drexel.edu" class="contact-link">
+        <span class="contact-link-icon">Email</span>
+        yw825@drexel.edu
+      </a>
+      <a href="https://linkedin.com/in/yusiwei" class="contact-link" target="_blank">
+        <span class="contact-link-icon">LinkedIn</span>
+        linkedin.com/in/yusiwei
+      </a>
+      <a href="https://github.com/yusiwei" class="contact-link" target="_blank">
+        <span class="contact-link-icon">GitHub</span>
+        github.com/yusiwei
+      </a>
+      <a href="#" class="contact-link" onclick="alert('Add your Google Scholar link here')">
+        <span class="contact-link-icon">Scholar</span>
+        Google Scholar Profile
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Yusi Wei · Philadelphia, PA</p>
+  <p>Built with HTML · Hosted on GitHub Pages</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
